@@ -71,8 +71,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  User.beforeCreate((user) => {
-    user.password = hashPassword(user.password);
+  User.beforeCreate((user, options) => {
+    if (!options || !options.noHashing) {
+      user.password = hashPassword(user.password);
+    }
   });
   return User;
 };
