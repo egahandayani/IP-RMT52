@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ipApi from "../helpers/http-client";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -34,6 +34,22 @@ export default function LoginPage() {
       });
     }
   };
+
+  function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+  }
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id: import.meta.env.VITE_CLIENT_ID,
+      callback: handleCredentialResponse,
+    });
+    window.google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" } // customization attributes
+    );
+    window.google.accounts.id.prompt(); // also display the One Tap dialog
+  }, []);
   return (
     <div className="container py-5">
       <form onSubmit={handleSubmit} className="w-50 m-auto border rounded p-5">
@@ -65,9 +81,11 @@ export default function LoginPage() {
             onChange={(el) => setPassword(el.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Login
-        </button>
+        <div className="d-flex justify-content-center">
+          <button type="submit" className="btn btn-primary w-100">
+            Login
+          </button>
+        </div>
         <div>
           <br />
           <p>
@@ -75,6 +93,10 @@ export default function LoginPage() {
             Don&apos;t have an account yet?{" "}
             <Link to="/register"> Register </Link>{" "}
           </p>
+        </div>
+        <div className="d-flex justify-content-center gap-3 flex-column align-items-center">
+          <div>Or</div>
+          <div id="buttonDiv"></div>
         </div>
       </form>
     </div>
