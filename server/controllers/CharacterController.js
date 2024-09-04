@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { MyCharacter } = require("../models");
 const mycharacter = require("../models/mycharacter");
+const { where } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -104,14 +105,18 @@ module.exports = class CharacterController {
 
   static async getMyCharacter(req, res, next) {
     try {
-      const myCharacters = await MyCharacter.findAll();
+      const myCharacters = await MyCharacter.findAll({
+        where: {
+          UserId: req.user.id,
+        },
+      });
+
       const myCharacterDetails = [];
 
-      for (let i = 0; i < myCharacters.length; i++) {
-        const myCharacter = myCharacters[i];
+      for (const myCharacter of myCharacters) {
         const apiUrl = `https://api.disneyapi.dev/character/${myCharacter.CharacterId}`;
         const response = await axios.get(apiUrl);
-        const character = response.data.data[0];
+        const character = response.data.data;
 
         const result = {
           id: character._id,
@@ -129,9 +134,9 @@ module.exports = class CharacterController {
           enemies: character.enemies.length > 0 ? character.enemies : null,
           sourceUrl: character.sourceUrl,
           name: character.name,
-          imageUrl: character.imageUrl,
-          createdAt: character.createdAt,
-          updatedAt: character.updatedAt,
+          imageUrl: myCharacter.imageUrl,
+          createdAt: myCharacter.createdAt,
+          updatedAt: myCharacter.updatedAt,
           url: character.url,
           version: character.__v,
         };
@@ -139,7 +144,7 @@ module.exports = class CharacterController {
         myCharacterDetails.push(result);
       }
 
-      res.status(200).json(favoriteDetails);
+      res.status(200).json(myCharacterDetails);
     } catch (err) {
       console.log("🚀 ~ CharacterController ~ getMyCharacter ~ err:", err);
       next(err);

@@ -20,7 +20,7 @@ router.use(authentication);
 router.get("/characters", CharacterController.getCharacters);
 router.get("/characters/:id", CharacterController.getOneCharacterById);
 router.post("/characters/:CharacterId", CharacterController.addMyCharacter);
-router.get("/characters/myCharacters", CharacterController.getMyCharacter);
+router.get("/characters/:id/myCharacters", CharacterController.getMyCharacter);
 router.patch(
   "/characters/:id/imageUrl",
   upload.single("imageUrl"),
