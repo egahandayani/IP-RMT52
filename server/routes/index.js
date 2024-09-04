@@ -15,7 +15,11 @@ router.post("/register", UserController.register);
 router.post("/login/google", UserController.googleLogin);
 
 // Protected CRUD Endpoints
-// router.use(authentication);
+router.use(authentication);
+router.get("/characters", CharacterController.getCharacters);
+router.get("/characters/:id", CharacterController.getOneCharacterById);
+router.post("/characters/myCharacter", CharacterController.addMyCharacter);
+router.get("/characters/myCharacters", CharacterController.getMyCharacter);
 
 // router.get("/character");
 

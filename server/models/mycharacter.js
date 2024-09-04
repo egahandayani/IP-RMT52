@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       MyCharacter.belongsTo(models.User);
-      MyCharacter.belongsTo(models.Character);
     }
   }
   MyCharacter.init(
     {
       UserId: DataTypes.INTEGER,
       CharacterId: DataTypes.INTEGER,
+      imageUrl: DataTypes.STRING,
     },
     {
       sequelize,

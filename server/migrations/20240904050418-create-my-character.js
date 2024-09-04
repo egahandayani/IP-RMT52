@@ -21,13 +21,6 @@ module.exports = {
       },
       CharacterId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: {
-            tableName: "Characters",
-          },
-          key: "id",
-        },
       },
       createdAt: {
         allowNull: false,
