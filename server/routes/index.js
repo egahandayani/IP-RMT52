@@ -3,6 +3,7 @@ const authentication = require("../middlewares/authentication");
 const UserController = require("../controllers/UserController");
 const CharacterController = require("../controllers/CharacterController");
 const multer = require("multer");
+const GeminiController = require("../controllers/GeminiController");
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/", (req, res, next) => {
@@ -27,5 +28,7 @@ router.patch(
   CharacterController.updateMyCharacter
 );
 router.delete("/characters/:id", CharacterController.deleteMyCharacter);
+
+router.post("/disney-characters", GeminiController.getDisneyCharacters);
 
 module.exports = router;
