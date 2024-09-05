@@ -83,7 +83,7 @@ export default function CharacterCard({ character }) {
               alignItems: "center",
             }}
             type="submit"
-            className="btn btn-info w-100"
+            className="btn btn-secondary w-100"
             onClick={handleDetails}
           >
             Details
