@@ -71,10 +71,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  User.beforeCreate((user, options) => {
-    if (!options || !options.noHashing) {
+  User.beforeCreate((user) => {
+    if (user.noHashing) {
       user.password = hashPassword(user.password);
     }
   });
+
   return User;
 };

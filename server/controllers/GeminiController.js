@@ -4,7 +4,10 @@ class GeminiController {
   static async getDisneyCharacters(req, res, next) {
     try {
       const { question } = req.body;
-      const prompt = `Tell me about the characters in the movie ${question}.`;
+      const prompt = `tell me about ${question} character. Response must be paragraph format
+
+        create without \`\`\` json and \`\`\` 
+      `;
       const response = await gemini(prompt);
 
       res.status(200).json({ response });

@@ -54,6 +54,7 @@ module.exports = class UserController {
       const access_token = signToken({ id: user.id });
       res.status(200).json({
         access_token: access_token,
+        id: user.id,
       });
     } catch (err) {
       console.log(err, "<<< UserController.login");
@@ -76,14 +77,12 @@ module.exports = class UserController {
         // Generate username
         const username = email.split("@")[0];
 
-        (user = await User.create({
+        user = await User.create({
           username,
           email,
           password: "MyDisneyWorld",
-        })),
-          {
-            noHashing: true,
-          };
+          noHashing: true,
+        });
       }
       // console.log({ googleToken, payload: ticket.getPayload() });
       // res.status(200).json({ message: "Login Success" });
