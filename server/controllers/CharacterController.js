@@ -179,7 +179,7 @@ module.exports = class CharacterController {
       const userId = req.user.id;
 
       const myCharacter = await MyCharacter.findOne({
-        where: { UserId: userId, id: id },
+        where: { UserId: userId, CharacterId: id },
       });
 
       if (!myCharacter) {
@@ -222,7 +222,7 @@ module.exports = class CharacterController {
       const userId = req.user.id;
 
       const myCharacter = await MyCharacter.findOne({
-        where: { id: id, UserId: userId },
+        where: { CharacterId: id, UserId: userId },
       });
 
       if (!myCharacter) {
