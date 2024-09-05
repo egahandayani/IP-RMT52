@@ -14,9 +14,11 @@ export default function UpdateCharacter() {
     dispatch(fetchCharacterDetail(id));
   }, [dispatch, id]);
 
-  const fetchImage = () => {
-    setImage(character.imageUrl);
-  };
+  useEffect(() => {
+    if (character) {
+      setImage(character.imageUrl);
+    }
+  }, [character]);
   return (
     <div>
       {/* Home Section */}
@@ -46,12 +48,12 @@ export default function UpdateCharacter() {
                   <img
                     src={image || "Character image not available"}
                     alt="Current character image not available"
-                    style={{ width: "30%", height: "auto" }}
+                    style={{ width: "40%", height: "auto" }}
                   />
                 </div>
 
                 <div style={{ marginTop: "1rem" }}>
-                  <CharacterUpload fetchImage={fetchImage} id={id} />
+                <CharacterUpload fetchImage={() => setImage(character.imageUrl)} id={id} />
                 </div>
               </div>
             </div>
