@@ -12,11 +12,27 @@ cloudinary.config({
 module.exports = class CharacterController {
   static async getCharacters(req, res, next) {
     try {
+      const { page = 1, pageSize = 50, q } = req.query;
       const apiUrl = "https://api.disneyapi.dev/character";
       const response = await axios.get(apiUrl);
-      const characters = response.data.data;
+      let characters = response.data.data;
 
-      const result = characters.map((character) => {
+      // Searching
+      if (q) {
+        characters = characters.filter((character) =>
+          character.name.toLowerCase().includes(q.toLowerCase())
+        );
+      }
+
+      const totalCharacters = characters.length;
+      const totalPages = Math.ceil(totalCharacters / pageSize);
+
+      const paginatedCharacters = characters.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+      );
+
+      const result = paginatedCharacters.map((character) => {
         return {
           id: character._id,
           films: character.films.length > 0 ? character.films : null,
@@ -41,7 +57,13 @@ module.exports = class CharacterController {
         };
       });
 
-      res.status(200).json(result);
+      res.status(200).json({
+        page: Number(page),
+        pageSize: Number(pageSize),
+        totalCharacters,
+        totalPages,
+        data: result,
+      });
     } catch (err) {
       console.log("🚀 ~ CharacterController ~ getCharacters ~ err:", err);
       next(err);
