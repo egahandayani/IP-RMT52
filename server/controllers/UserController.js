@@ -84,8 +84,6 @@ module.exports = class UserController {
           noHashing: true,
         });
       }
-      // console.log({ googleToken, payload: ticket.getPayload() });
-      // res.status(200).json({ message: "Login Success" });
 
       const access_token = signToken({ id: user.id });
       res.status(200).json({
