@@ -18,6 +18,7 @@ export default function LoginPage() {
       });
 
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("userId", data.id);
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -35,8 +36,21 @@ export default function LoginPage() {
     }
   };
 
-  function handleCredentialResponse(response) {
+  async function handleCredentialResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
+    const { data } = await ipApi.post("/login/google", {
+      googleToken: response.credential,
+    });
+
+    localStorage.setItem("access_token", data.access_token);
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "User login successfully!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/");
   }
 
   useEffect(() => {
