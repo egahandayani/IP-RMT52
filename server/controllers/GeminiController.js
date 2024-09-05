@@ -4,7 +4,7 @@ class GeminiController {
   static async getDisneyCharacters(req, res, next) {
     try {
       const { question } = req.body;
-      const prompt = "Tell me about the characters in the movie Frozen.";
+      const prompt = `Tell me about the characters in the movie ${question}.`;
       const response = await gemini(prompt);
 
       res.status(200).json({ response });

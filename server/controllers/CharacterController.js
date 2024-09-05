@@ -71,11 +71,11 @@ module.exports = class CharacterController {
   }
 
   static async getOneCharacterById(req, res, next) {
-    const { _id } = req.params;
+    const { id } = req.params;
     try {
-      const apiUrl = `https://api.disneyapi.dev/character/${_id}`;
+      const apiUrl = `https://api.disneyapi.dev/character/${id}`;
       const response = await axios.get(apiUrl);
-      const character = response.data.data[0];
+      const character = response.data.data;
 
       const result = {
         id: character._id,
