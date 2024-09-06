@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editCharacterImage } from "../features/character/characterSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function CharacterUpload({ fetchImage, id }) {
   const [file, setFile] = useState(null);
@@ -11,11 +12,28 @@ export default function CharacterUpload({ fetchImage, id }) {
   const handleOnUpload = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("imageUrl", file);
-    dispatch(editCharacterImage({ id, formData }));
-    fetchImage();
-    navigate("/myCharacters");
+    try {
+      const formData = new FormData();
+      formData.append("imageUrl", file);
+      dispatch(editCharacterImage({ id, formData }));
+      fetchImage();
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "MyCharacter updated successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/myCharacters");
+    } catch (err) {
+      console.log("🚀 ~ handleOnUpload ~ err:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err?.response?.data?.error || "Something went wrong! ",
+      });
+    }
   };
   return (
     <div>

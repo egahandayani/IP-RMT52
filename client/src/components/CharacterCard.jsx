@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createMyCharacter } from "../features/character/characterSlice";
+import Swal from "sweetalert2";
 
 export default function CharacterCard({ character }) {
   const navigate = useNavigate();
@@ -10,12 +11,23 @@ export default function CharacterCard({ character }) {
     navigate(`/characters/${character.id}`);
   };
 
-   const handleAddMyCharacter = async () => {
+  const handleAddMyCharacter = async () => {
     try {
       await dispatch(createMyCharacter(character.id));
-      navigate('/myCharacters');
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "MyCharacter created successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/myCharacters");
     } catch (err) {
-      console.log('Error adding character:', err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err?.response?.data?.error || "Something went wrong! ",
+      });
     }
   };
 

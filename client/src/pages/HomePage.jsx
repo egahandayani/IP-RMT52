@@ -92,7 +92,7 @@ export default function HomePage() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-info"
               disabled={loading}
             >
               {loading ? "Loading..." : "Ask"}
@@ -102,7 +102,13 @@ export default function HomePage() {
           {aiResponse && (
             <div className="mt-4">
               <h4>Gemini AI Response:</h4>
-              <p>{aiResponse}</p>
+              <p
+                style={{
+                  textAlign: "justify",
+                }}
+              >
+                {aiResponse}
+              </p>
             </div>
           )}
         </div>

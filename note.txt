@@ -1,0 +1,20 @@
+npx sequelize-cli model:generate --name User --attributes username:string,email:string,password:string
+
+npx sequelize-cli model:generate --name Character --attributes url:string,name:string,sourceUrl:string,films:string,shortFilms:string,tvShows:string,videoGames:string,imageUrl:string,parkAttractions:string,allies:string,enemies:string,__v:integer
+
+
+npx sequelize-cli model:generate --name MyCharacter --attributes UserId:integer,CharacterId:integer
+
+
+npx sequelize-cli seed:generate --name data-users
+
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+
+npx sequelize-cli migration:generate --name add-column-imageUrl
+
+- Drop db testing: `sequelize --env test db:drop`
+- Create db testing: `sequelize --env test db:create`
+- Migrate db testing: `sequelize --env test db:migrate`
+- Ketika run test buatlah `bin/www` untuk menjalankan aplikasi express, pada file `app.js` lakukan `module.exports = app`
+- Pada package.json tambahkan script `"test": "jest --runInBand --forceExit --verbose --detectOpenHandles"`

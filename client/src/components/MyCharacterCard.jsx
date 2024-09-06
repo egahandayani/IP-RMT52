@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteMyCharacter } from "../features/character/characterSlice";
+import Swal from "sweetalert2";
 
 export default function MyCharacterCard({ id, name, imageUrl, films }) {
   const navigate = useNavigate();
@@ -10,9 +11,30 @@ export default function MyCharacterCard({ id, name, imageUrl, films }) {
     navigate(`/characters/${id}/update-image`);
   };
 
-  const handleDelete = () => {
-    dispatch(deleteMyCharacter(id));
-    navigate("/myCharacters");
+  const handleDelete = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        await dispatch(deleteMyCharacter(id));
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your character has been deleted.",
+          icon: "success",
+        });
+      }
+      navigate("/myCharacters");
+    } catch (err) {
+      console.log("🚀 ~ handleDelete ~ err:", err);
+    }
   };
 
   return (
