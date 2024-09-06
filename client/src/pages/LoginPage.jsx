@@ -60,9 +60,9 @@ export default function LoginPage() {
     });
     window.google.accounts.id.renderButton(
       document.getElementById("buttonDiv"),
-      { theme: "outline", size: "large" } // customization attributes
+      { theme: "outline", size: "large" } 
     );
-    window.google.accounts.id.prompt(); // also display the One Tap dialog
+    window.google.accounts.id.prompt();
   }, []);
   return (
     <div className="container py-5">
