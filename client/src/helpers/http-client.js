@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ipApi = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://ip-rmt52.egahandayani.my.id",
 });
 
 export default ipApi;
