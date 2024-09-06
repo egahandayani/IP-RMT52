@@ -1,0 +1,46 @@
+/* Detail CSS */
+
+.detail-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f8f9fa76;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .entity-image {
+    width: 50%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .entity-name {
+    margin-top: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+  
+  .entity-description {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #555;
+    text-align: left;
+  }
+  
+  .entity-category {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  .entity-price {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #007bff;
+    text-align: center;
+  }
